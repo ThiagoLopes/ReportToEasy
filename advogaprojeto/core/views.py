@@ -11,14 +11,15 @@ from core.models import Usuario
 
 @login_required
 def index(request):
+    usuarios = Usuario.objects.all()
     usuario = Usuario.objects.get(id=request.user.id)
-    return render(request, 'index.html',{"usuario": usuario})
+    return render(request, 'index.html',{"usuario" : usuario ,"usuarios" : usuarios})
 
 def login(request):
     if request.method == 'POST':
         form = LogarForm(request.POST)
         dados_form = form.data
-        user = authenticate(username = dados_form['username'], password = dados_form['password'])
+        user = authenticate(username = dados_form['username'].lower(), password = dados_form['password'])
 
         if user is not None:
             login_page(request, user )
@@ -41,9 +42,9 @@ def registrar(request):
 
             # todo o processo de salvar no bd e criar user
             # criar user
-            criar_user = User.objects.create_user(dados_form['nome'], dados_form['email'], dados_form['senha'])
+            criar_user = User.objects.create_user(dados_form['nome'].lower(), dados_form['email'].lower(), dados_form['senha'])
             #criar Usuario
-            usuario = Usuario(nome=dados_form['nome'],email=dados_form['email'], telefone=dados_form['telefone'],user=criar_user)
+            usuario = Usuario(nome=dados_form['nome'].lower(),email=dados_form['email'].lower(), telefone=dados_form['telefone'],user=criar_user)
             #salvar
             usuario.save()
             return redirect('login')
