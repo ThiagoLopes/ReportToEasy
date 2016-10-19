@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block body %}
+<h2>Hi, {{usuario.nome}} your id as: {{usuario.id}}<h2>
+<a href="{% url 'logout' %}">Logout</a>
+{% endblock %}

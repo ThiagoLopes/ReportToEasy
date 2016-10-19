@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="center-block" > 
+    <!-- ERROR --> 
+    {%if form%}
+      <div class="alert alert-dismissible alert-danger col-lg-6 col-lg-offset-3">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>{{form.non_field_errors}}</strong>
+    </div>
+    {%endif%}
+    <!---->
+  <form id="registrar-form" class="col-lg-6 col-lg-offset-3 form-horizontal jumbotron" accept-charset="UTF-8" action="{% url 'registrar' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+  <legend>Registrar-se</legend>
+
+
+      <div class="form-group">
+        <label for="in_nome" class="col-lg-2 control-label">Usuario</label>
+        <div class="col-lg-10">
+          <input type="text" id="id_nome" name="nome" class="form-control" placeholder="Login" required autofocus>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="in_email" class="col-lg-2 control-label">E-Mail</label>
+        <div class="col-lg-10">
+          <input type="text" id="id_email" name="email" class="form-control" placeholder="E-Mail" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="in_senha" class="col-lg-2 control-label">Senha</label>
+        <div class="col-lg-10">
+         <input type="password" id="id_senha" name="senha" class="form-control" placeholder="Senha" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="in_telefone" class="col-lg-2 control-label">Telefone</label>
+        <div class="col-lg-10">
+          <input type="text" id="id_telefone" name="telefone" class="form-control" placeholder="Telefone" required=>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <button class="btn btn-lg btn-primary btn-block btn-success" type="submit" value="Login">Criar</button>
+      </div>
+      <div class="col-lg-6">
+        <button type="reset" class="btn btn-default btn-lg btn-block">Limpar</button>
+      </div>
+      
+    </fieldset>
+  </form>
+</div>
+{% endblock %}
