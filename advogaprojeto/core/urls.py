@@ -21,5 +21,7 @@ urlpatterns = [
 	url(r'^registrar/$',views.registrar, name='registrar'),
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.log_out, name='logout'),
-    url(r'^$', views.index, name='index'),
+    url(r'^index/$', views.index, name='index'),
+    url(r'^$', views.home, name='home'),
+    url(r'^gerar_documento$' ,views.gerar_documento , name='gerar_documento')
 ]

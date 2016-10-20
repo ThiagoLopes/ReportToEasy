@@ -9,11 +9,17 @@ from core.models import Usuario
 
 # Create your views here.
 
+def home(request):
+    if request.user.is_authenticated == True:
+        return redirect('index')
+    else:
+        return render(request, 'home.html')
+
 @login_required
 def index(request):
     usuarios = Usuario.objects.all()
     usuario = Usuario.objects.get(id=request.user.id)
-    return render(request, 'index.html',{"usuario" : usuario ,"usuarios" : usuarios})
+    return render(request,'index.html', {"usuario" : usuario ,"usuarios" : usuarios})
 
 def login(request):
     if request.method == 'POST':
@@ -30,7 +36,7 @@ def login(request):
 
 def log_out(request):
     logout(request)
-    return redirect('index')
+    return redirect('home')
 
 def registrar(request):
 
@@ -52,3 +58,7 @@ def registrar(request):
             return render(request, 'registrar.html', {"form":form})
 
     return render(request, 'registrar.html')
+
+@login_required
+def gerar_documento(request):
+    return render(request, 'gerar_documento.html')

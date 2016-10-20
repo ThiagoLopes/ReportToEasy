@@ -1,0 +1,10 @@
+{% extends 'base.html'%}
+{% block body%}
+    <div class="col-lg-6 col-lg-offset-3">
+        
+        <h1>Bem vindo, loge-se ou registre-se</h1>
+        <a href="{% url 'login'%}" class="btn btn-lg btn-primary">Logar</a>
+        <a href="{% url 'registrar' %}" class=" btn btn-lg btn-success">Registrar</a>
+        
+    </div>
+{% endblock%}
