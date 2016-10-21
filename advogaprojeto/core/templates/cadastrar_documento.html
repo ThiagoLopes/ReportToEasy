@@ -1,33 +1,66 @@
 {% extends 'base_index.html' %}
 {% block body_index %}
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-        </div>
-        <div class="panel-body">
-            <form class="col-lg-6 col-lg-offset-3 form-horizontal jumbotron" accept-charset="UTF-8"  action="{% url 'cadastrar_documento' %}" method="POST" >
-            {% csrf_token %}
-                <div class="form-group">
-                    <label for="in_username" class="col-lg-2 control-label">Nome</label>
-                    <div class="col-lg-10">
-                        <input type="text" id="id_nome" name="nome" class="form-control" placeholder="Nome" required autofocus>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="in_username" class="col-lg-2 control-label">Descrição</label>
-                    <div class="col-lg-10">
-                        <input type="text" id="id_username" name="descricao" class="form-control" placeholder="Descrição" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="in_username" class="col-lg-2 control-label">Arquivo</label>
-                    <div class="col-lg-10">
-                        <input type="file" id="id_username" name="arquivo" class="form-control" placeholder="Upload" required>
-                    </div>
-                </div>
-            <div class="col-lg-6">
-                <button class="btn" type="submit" value="Login">Salvar Documento</button>
+    <div class="col-lg-7">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Criar um novo Template</h3>
             </div>
-            </form>
+            <div class="panel-body">
+                <form class="form-horizontal col-lg-12" accept-charset="UTF-8" enctype="multipart/form-data" action="{% url 'cadastrar_documento' %}" method="POST" >
+                    {% csrf_token %}
+                    <!--  -->
+                    <div class="form-group">
+                        <label for="id_nome" class="control-label">Nome do Template*</label>
+                        <div>
+                            <input type="text" id="id_nome" name="nome" class="form-control" placeholder="Nome" required autofocus>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="form-group">
+                        <label for="textArea" class="control-label">Descrição*</label>
+                        <div >
+                            <textarea placeholder="Descrição" style="width: 100%; height: 163px;" name="descricao" class="form-control" rows="3" id="textArea" class="input" required></textarea>
+                            <span class="help-block">Um breve descrição sobre o arquivo</span>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="form-group">
+                        <label for="id_arquivo" class="control-label">Arquivo*</label>
+                        <div>
+                            <input type="file" id="id_arquivo" name="arquivo" class="input" placeholder="Upload" required>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="form-group">
+                        <button class="btn btn-lg btn-primary" type="submit" value="Criar">Salvar Documento</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+    <!-- outro panel -->
+    <div class="col-lg-5">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Seus Templates</h3>
+            </div>
+            {% if arquivos_do_user %}
+                {% for arquivo in arquivos_do_user%}
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            {{arquivo.nome}}
+                        </li>
+                    </ul>
+                {% endfor %}
+                {%else%}
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        Desculpe, você não templates.
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+
+    {{form}}
 {% endblock %}

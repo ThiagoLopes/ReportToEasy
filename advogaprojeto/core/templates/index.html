@@ -6,9 +6,32 @@
             <h3 class="panel-title">Templates criados</h3>
         </div>
         <div class="panel-body">
-            {% for arquivo in arquivos %}
-               <a href="#">{{arquivo.nome}}</a>
-            {% endfor %}
+            {% if arquivos%}
+                <table class="table table-striped table-hover ">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    {% for arquivo in arquivos %}
+                        <tbody>
+                            <tr>
+                                <td>{{arquivo.nome}}</td>
+                                <td>{{arquivo.descricao|truncatechars:12}}</td>
+                                <td>{{arquivo.data}}</td>
+                            </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+                {%else%}
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        Desculpe, você não templates.
+                    </li>
+                </ul>
+            {% endif %}
         </div>
     </div>
     
@@ -21,7 +44,7 @@
     </div>
     {%endblock%}
     <!--  -->
-{%block menu%}
+    {%block menu%}
     <div class="panel panel-success">
         <div class="panel-heading">
             <h3 class="panel-title">Todos os usuarios</h3>

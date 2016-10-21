@@ -26,13 +26,21 @@ def home(request):
 def index(request):
     usuarios = Usuario.objects.all()
     arquivos = TemplateFile.objects.all()
-    return render(request,'index.html', {"usuario" : get_user_logado(request) ,"usuarios" : usuarios, "arquivos":arquivos})
+    return render(
+        request,'index.html',{
+        "usuario" : get_user_logado(request),
+        "usuarios" : usuarios,
+        "arquivos":arquivos}
+        )
 
 def login(request):
     if request.method == 'POST':
         form = LogarForm(request.POST)
         dados_form = form.data
-        user = authenticate(username = dados_form['username'].lower(), password = dados_form['password'])
+        user = authenticate(
+            username = dados_form['username'].lower(),
+            password = dados_form['password']
+            )
         if user is not None:
             login_page(request, user )
             return redirect('index')
@@ -50,9 +58,18 @@ def registrar(request):
             dados_form = form.data
             # todo o processo de salvar no bd e criar user
             # criar user
-            criar_user = User.objects.create_user(dados_form['nome'].lower(), dados_form['email'].lower(), dados_form['senha'])
+            criar_user = User.objects.create_user(
+                dados_form['nome'].lower(),
+                dados_form['email'].lower(),
+                dados_form['senha']
+                )
             #criar Usuario
-            usuario = Usuario(nome=dados_form['nome'].lower(),email=dados_form['email'].lower(), telefone=dados_form['telefone'],user=criar_user)
+            usuario = Usuario(
+                nome=dados_form['nome'].lower(),
+                email=dados_form['email'].lower(),
+                telefone=dados_form['telefone'],
+                user=criar_user
+                )
             #salvar
             usuario.save()
             return redirect('login')
@@ -71,6 +88,22 @@ def gerar_documento(request):
 def cadastrar_documento(request):
     if request.method == 'POST':
         form = TemplateForm(request.POST, request.FILES)
-        arq = TemplateFile(nome=form.data['nome'],descricao=form.data['descricao'],arquivo=form.data['arquivo'])
-        arq.save()
-    return render(request,'cadastrar_documento.html',{"usuario":get_user_logado(request)})
+        if form.is_valid():
+            print('valido')
+            arq = TemplateFile(
+                nome=form.data['nome'],
+                descricao=form.data['descricao'],
+                arquivo=request.FILES['arquivo'],
+                user=Usuario.objects.get(id=request.user.id)
+                )
+            arq.save()
+            print('salvou')
+            return redirect('index')
+        else:
+            return render(request,'cadastrar_documento.html',{"form":form})
+    else:
+        arquivos = TemplateFile.objects.all().filter(user=get_user_logado(request))
+        return render(request,'cadastrar_documento.html',{
+            "usuario":get_user_logado(request),
+            "arquivos_do_user":arquivos}
+                )

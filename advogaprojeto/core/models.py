@@ -13,7 +13,7 @@ class Usuario(models.Model):
 class TemplateFile(models.Model):
 
     nome = models.CharField(max_length=30, null=False, unique=True)
-    descricao = models.CharField(max_length=100, null=False)
+    descricao = models.TextField(max_length=100, null=False)
     data = models.DateField(auto_now_add=True)
-    arquivo = models.FileField(upload_to='uploads/%Y/%m/%d/')
+    arquivo = models.FileField(upload_to='product/%Y/%m/%d')
     user = models.ForeignKey(Usuario, on_delete=models.CASCADE)

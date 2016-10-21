@@ -18,11 +18,11 @@ from core import views
 from django.contrib import admin
 
 urlpatterns = [
-	url(r'^registrar/$',views.registrar, name='registrar'),
+    url(r'^$', views.home, name='home'),
+    url(r'^registrar/$',views.registrar, name='registrar'),
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.log_out, name='logout'),
     url(r'^index/$', views.index, name='index'),
-    url(r'^$', views.home, name='home'),
     url(r'^gerar_documento$' ,views.gerar_documento , name='gerar_documento'),
     url(r'^cadastro$' ,views.cadastrar_documento, name='cadastrar_documento')
 ]
