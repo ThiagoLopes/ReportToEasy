@@ -123,3 +123,4 @@ STATIC_URL = '/static/'
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGOUT_URL = '/logout/'
+

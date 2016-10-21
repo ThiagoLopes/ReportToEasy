@@ -1,5 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.forms import ModelForm
+
+from core.models import TemplateFile
 
 class RegistrarUsuarioForm(forms.Form):
     nome = forms.CharField(required=True)
@@ -21,3 +24,8 @@ class RegistrarUsuarioForm(forms.Form):
 class LogarForm(forms.Form):
     nome = forms.CharField(required=True)
     senha = forms.CharField(required=True)
+
+class TemplateForm(ModelForm):
+    class Meta:
+        model = TemplateFile
+        fields = ['nome','descricao','arquivo']

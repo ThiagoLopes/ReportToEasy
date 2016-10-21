@@ -10,6 +10,10 @@ class Usuario(models.Model):
     email = models.CharField(max_length=30, null=False, unique=True)
     user = models.OneToOneField(User, related_name="Usuario")
 
-class Template(models.Model):
+class TemplateFile(models.Model):
 
-    texto = models.TextField(max_length=500, null=False)
+    nome = models.CharField(max_length=30, null=False, unique=True)
+    descricao = models.CharField(max_length=100, null=False)
+    data = models.DateField(auto_now_add=True)
+    arquivo = models.FileField(upload_to='uploads/%Y/%m/%d/')
+    user = models.ForeignKey(Usuario, on_delete=models.CASCADE)
