@@ -1,7 +1,6 @@
-{%extends "base.html"%}
-{%block body%}
+{%extends "base.html"%} {%block body%}
 <div id="loginbox" class="center">
-    <form class="col-lg-6 col-lg-offset-3 form-horizontal jumbotron" accept-charset="UTF-8"  action="{% url 'login' %}" method="POST" >
+    <form class="col-lg-6 col-lg-offset-3 form-horizontal jumbotron" accept-charset="UTF-8" action="{% url 'login' %}" method="POST">
         {% csrf_token %}
         <legend>Logar</legend>
         <div class="form-group">
@@ -16,7 +15,7 @@
                 <input type="password" id="id_password" name="password" class="form-control" placeholder="Senha" required>
             </div>
         </div>
-        
+
         <div class="col-lg-6">
             <button class="btn btn-success btn-lg btn-block" type="submit" value="Login">Logar</button>
         </div>

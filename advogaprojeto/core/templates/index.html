@@ -1,69 +1,65 @@
-{% extends 'base_index.html' %}
-{% block body_index %}
-    <!-- menu lateral -->
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">Templates criados</h3>
-        </div>
-        <div class="panel-body">
-            {% if arquivos%}
-                <table class="table table-striped table-hover ">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Descrição</th>
-                            <th>Data</th>
-                        </tr>
-                    </thead>
-                    {% for arquivo in arquivos %}
-                        <tbody>
-                            <tr>
-                                <td>{{arquivo.nome}}</td>
-                                <td>{{arquivo.descricao|truncatechars:12}}</td>
-                                <td>{{arquivo.data}}</td>
-                            </tr>
-                        </tbody>
-                    {% endfor %}
-                </table>
-                {%else%}
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        Desculpe, você não templates.
-                    </li>
-                </ul>
-            {% endif %}
-        </div>
+{% extends 'base_index.html' %} {% block body_index %}
+<!-- menu lateral -->
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Templates criados</h3>
     </div>
-    
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">Seus relatrios emitidos</h3>
-        </div>
-        <div class="panel-body">
-        </div>
+    <div class="panel-body">
+        {% if arquivos%}
+        <table class="table table-striped table-hover ">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            {% for arquivo in arquivos %}
+            <tbody>
+                <tr>
+                    <td>{{arquivo.nome}}</td>
+                    <td>{{arquivo.descricao|truncatechars:12}}</td>
+                    <td>{{arquivo.data}}</td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+        {%else%}
+        <ul class="list-group">
+            <li class="list-group-item">
+                Desculpe, você não templates.
+            </li>
+        </ul>
+        {% endif %}
     </div>
-    {%endblock%}
-    <!--  -->
-    {%block menu%}
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <h3 class="panel-title">Todos os usuarios</h3>
-        </div>
-        <div class="panel-body">
-            <table class="table table-striped table-hover ">
-                <tbody>
-                    {% for user in usuarios %}
-                        {% if not user.nome == usuario.nome%}
-                            <tr>
-                                <th>
-                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                    {{ user.nome|title }}
-                                </th>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Seus relatrios emitidos</h3>
     </div>
+    <div class="panel-body">
+    </div>
+</div>
+{%endblock%}
+<!--  -->
+{%block menu%}
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">Todos os usuarios</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-hover ">
+            <tbody>
+                {% for user in usuarios %} {% if not user.nome == usuario.nome%}
+                <tr>
+                    <th>
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ user.nome|title }}
+                    </th>
+                </tr>
+                {% endif %} {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

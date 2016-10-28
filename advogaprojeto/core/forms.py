@@ -4,6 +4,7 @@ from django.forms import ModelForm
 
 from core.models import TemplateFile
 
+
 class RegistrarUsuarioForm(forms.Form):
     nome = forms.CharField(required=True)
     email = forms.EmailField(required=True)
@@ -18,14 +19,18 @@ class RegistrarUsuarioForm(forms.Form):
         return valid
 
     def adiciona_erro(self, message):
-        errors = self._errors.setdefault(forms.forms.NON_FIELD_ERRORS, forms.utils.ErrorList())
+        errors = self._errors.setdefault(
+            forms.forms.NON_FIELD_ERRORS, forms.utils.ErrorList())
         errors.append(message)
+
 
 class LogarForm(forms.Form):
     nome = forms.CharField(required=True)
     senha = forms.CharField(required=True)
 
+
 class TemplateForm(ModelForm):
+
     class Meta:
         model = TemplateFile
-        fields = ['nome','descricao','arquivo']
+        fields = ['nome', 'descricao', 'arquivo']
