@@ -17,7 +17,7 @@
             {% for arquivo in arquivos %}
             <tbody>
                 <tr>
-                    <td>{{arquivo.nome}}</td>
+                    <td><a href="{% url 'documento' arquivo.id%}">{{arquivo.nome}}</a></td>
                     <td>{{arquivo.descricao|truncatechars:12}}</td>
                     <td>{{arquivo.data}}</td>
                 </tr>

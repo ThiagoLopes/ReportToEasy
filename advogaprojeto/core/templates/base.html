@@ -4,7 +4,8 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="{% static " css/bootstrap.css "%}" rel="stylesheet"> {% if usuario %}
+    <link href="{% static "css/bootstrap.css"%}" rel="stylesheet">
+    {% if usuario %}
     <title>Dashboard</title>
     {%else%}
     <title>Bem Vindo</title>
@@ -22,7 +23,11 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           </button>
-                <a class="navbar-brand">Dashbord</a>
+                {% if usuario %}
+                <a href="{% url 'index' %}" class="navbar-brand">Dashbord</a>
+                {% else %}
+                <a class="navbar-brand">Bem Vindo!</a>
+                {% endif %}
             </div>
         </div>
     </nav>

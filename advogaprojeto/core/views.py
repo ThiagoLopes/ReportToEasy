@@ -8,6 +8,7 @@ from django.template import RequestContext
 
 from core.forms import RegistrarUsuarioForm, LogarForm, TemplateForm
 from core.models import Usuario, TemplateFile
+from core.scripts import is_valid_template
 
 # Create your views here.
 
@@ -16,6 +17,11 @@ from core.models import Usuario, TemplateFile
 def get_user_logado(request):
     usuario = Usuario.objects.get(id=request.user.id)
     return usuario
+
+
+def get_template(id_arquivo):
+    arquivo = TemplateFile.objects.get(id=id_arquivo)
+    return arquivo
 
 
 def home(request):
@@ -111,3 +117,8 @@ def cadastrar_documento(request):
             "usuario": get_user_logado(request),
             "arquivos_do_user": arquivos}
         )
+
+
+@login_required
+def documento(request, id_arquivo):
+    return render(request, 'gerar_documento.html', {"usuario": get_user_logado(request), "arquivo": TemplateFile.objects.get(id=id_arquivo)})
