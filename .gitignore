@@ -99,4 +99,4 @@ ENV/
 .ropeproject
 
 # Arquivos/Pastas Do Projeto
-*/docs/*
+docs/

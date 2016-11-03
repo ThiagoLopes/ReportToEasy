@@ -1,4 +1,11 @@
 {% extends 'base_index.html' %}
 {% block body_index %}
     {{arquivo.id}}
+    {% if keys %}
+        {% for key in keys%}
+        {{key|title}}
+        {%endfor%}
+    {%else%}
+    {%endif%}
+    <a href="{% url 'documento' arquivo.id %}" class="btn" method="POST">Deletar!</a>
 {% endblock %}

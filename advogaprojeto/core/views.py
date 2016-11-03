@@ -8,7 +8,7 @@ from django.template import RequestContext
 
 from core.forms import RegistrarUsuarioForm, LogarForm, TemplateForm
 from core.models import Usuario, TemplateFile
-from core.scripts import is_valid_template
+from core.scripts import is_template
 
 # Create your views here.
 
@@ -121,4 +121,12 @@ def cadastrar_documento(request):
 
 @login_required
 def documento(request, id_arquivo):
-    return render(request, 'gerar_documento.html', {"usuario": get_user_logado(request), "arquivo": TemplateFile.objects.get(id=id_arquivo)})
+    doc = TemplateFile.objects.get(id=id_arquivo)
+    if request.method == "POST":
+        doc.delete()
+        return redirect('index')
+    keys = is_template(doc.arquivo.name)
+    if not keys:
+        return render(request, 'gerar_documento.html', {"usuario": get_user_logado(request), "arquivo": doc})
+    else:
+        return render(request, 'gerar_documento.html', {"usuario": get_user_logado(request), "arquivo": doc, "keys": keys})
