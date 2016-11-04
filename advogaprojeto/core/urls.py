@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^index/$', views.index, name='index'),
     url(r'^gerar_documento$', views.gerar_documento, name='gerar_documento'),
     url(r'^cadastro$', views.cadastrar_documento, name='cadastrar_documento'),
-    url(r'^documento/(?P<id_arquivo>\d+)$', views.documento, name='documento')
+    url(r'^documento/(?P<id_arquivo>\d+)$', views.documento, name='documento'),
+    url(r'^delete/(?P<id_template>\d+)$', views.delete_template, name='delete')
 ]

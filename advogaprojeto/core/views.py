@@ -3,12 +3,13 @@ from django.contrib.auth.forms import User
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as login_page  # edit for name def login
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 
 from django.template import RequestContext
 
 from core.forms import RegistrarUsuarioForm, LogarForm, TemplateForm
 from core.models import Usuario, TemplateFile
-from core.scripts import is_template
+from core.scripts import is_template, clear_query
 
 # Create your views here.
 
@@ -17,11 +18,6 @@ from core.scripts import is_template
 def get_user_logado(request):
     usuario = Usuario.objects.get(id=request.user.id)
     return usuario
-
-
-def get_template(id_arquivo):
-    arquivo = TemplateFile.objects.get(id=id_arquivo)
-    return arquivo
 
 
 def home(request):
@@ -122,11 +118,34 @@ def cadastrar_documento(request):
 @login_required
 def documento(request, id_arquivo):
     doc = TemplateFile.objects.get(id=id_arquivo)
-    if request.method == "POST":
-        doc.delete()
-        return redirect('index')
-    keys = is_template(doc.arquivo.name)
+    try:
+        keys = is_template(doc.arquivo.name)
+    except:
+        raise ("error")
+
     if not keys:
-        return render(request, 'gerar_documento.html', {"usuario": get_user_logado(request), "arquivo": doc})
+        return render(request, 'gerar_documento.html', {
+            "usuario": get_user_logado(request),
+            "arquivo": doc}
+        )
     else:
-        return render(request, 'gerar_documento.html', {"usuario": get_user_logado(request), "arquivo": doc, "keys": keys})
+        if request.method == 'POST':
+            form = request.POST
+            dict_form = form.dict()
+            dict_form = clear_query(dict_form)
+            response = HttpResponse(content_type='application/vnd.ms-word')
+            response[
+                'Content-Disposition'] = 'attachment; filename="documento.docx"'
+            return response
+        return render(request, 'gerar_documento.html', {
+            "usuario": get_user_logado(request),
+            "arquivo": doc,
+            "keys": keys}
+        )
+
+
+@login_required
+def delete_template(request, id_template):
+    obj = TemplateFile.objects.get(id=id_template)
+    obj.delete()
+    return redirect('index')

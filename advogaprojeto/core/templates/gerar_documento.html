@@ -1,11 +1,20 @@
 {% extends 'base_index.html' %}
 {% block body_index %}
-    {{arquivo.id}}
     {% if keys %}
-        {% for key in keys%}
-        {{key|title}}
-        {%endfor%}
+        {# {{key|title}}#}
+        <form class="form-horizontal col-lg-12" accept-charset="UTF-8" action="#" method="POST">
+            {% csrf_token %}
+            {% for key in keys%}
+            <div class="form-group">
+                <input type="text" id="id_{{key|lower}}" name="{{key}}" class="form-control" placeholder="{{key|title}}" required autofocus>
+            </div>
+            {%endfor%}
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary" type="submit" value="Criar">gerar documento</button>
+            </div>
+        </form>
     {%else%}
+    <p>Documento não tem chaves</p>
     {%endif%}
-    <a href="{% url 'documento' arquivo.id %}" class="btn" method="POST">Deletar!</a>
+    <a href="{% url 'delete' arquivo.id %}" class="btn">Deletar</a>
 {% endblock %}
